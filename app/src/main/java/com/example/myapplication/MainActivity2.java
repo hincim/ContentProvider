@@ -34,6 +34,7 @@ public class MainActivity2 extends AppCompatActivity {
     Bitmap selectedImage;
 
     String firstName;
+    String getFirstName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,6 @@ public class MainActivity2 extends AppCompatActivity {
             String name = intent.getStringExtra("name");
             editTextTextPersonName.setText(name);
             firstName = name;
-            // bunu update fonksiyonu için alırım.
             int position = intent.getIntExtra("position",0);
             imageView.setImageBitmap(MainActivity.artImageList.get(position));
             saveButton.setVisibility(View.INVISIBLE);
@@ -79,7 +79,6 @@ public class MainActivity2 extends AppCompatActivity {
 
         selectedImage.compress(Bitmap.CompressFormat.PNG,50,outputStream);
          byte[] bytes = outputStream.toByteArray();
-        // imageimi buraya koydum.
 
         ContentValues contentValues = new ContentValues();
 
@@ -108,7 +107,6 @@ public class MainActivity2 extends AppCompatActivity {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        // güncel resmi aldım.
         bitmap.compress(Bitmap.CompressFormat.PNG,50,outputStream);
         byte[] bytes = outputStream.toByteArray();
 
@@ -118,7 +116,6 @@ public class MainActivity2 extends AppCompatActivity {
         contentValues.put(ArtContentProvider.IMAGE,bytes);
 
         getContentResolver().update(ArtContentProvider.CONTENT_URI,contentValues,"name=?",new String[]{firstName});
-        // firstName e göre güncelle.
 
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
@@ -137,7 +134,6 @@ public class MainActivity2 extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // izin verilirse
 
         if (requestCode == 1){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -150,12 +146,10 @@ public class MainActivity2 extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // geri gelen sonucu alırım.
 
         if (requestCode == 2 && resultCode == RESULT_OK && data != null){
 
             Uri image = data.getData();
-            // gelen datayı Uriye çeviririm.
 
             try {
                 selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(),image);

@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
 
         Cursor cursor = contentResolver.query(artUri,null,null,null,"name");
-        // name e göre sırala.
         if (cursor != null){
 
             while (cursor.moveToNext()){
